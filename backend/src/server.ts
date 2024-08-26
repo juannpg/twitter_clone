@@ -4,9 +4,6 @@ import usersRouter from './routers/users'
 import tweetsRouter from './routers/tweets'
 import repliesRouter from './routers/replies'
 
-import * as dotenv from 'dotenv';
-dotenv.config();
-
 export const server = express();
 server.use(express.json());
 server.use(cors({

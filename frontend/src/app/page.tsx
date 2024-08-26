@@ -1,9 +1,6 @@
 import RegisterComp from "@/components/RegisterComp";
 import HrefBtnComp from "@/components/HrefBtnComp";
 
-import dotenv from 'dotenv';
-dotenv.config();
-
 import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Twitter Clone | Register",
