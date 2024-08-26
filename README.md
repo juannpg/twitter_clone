@@ -23,7 +23,7 @@ Twitter Clone is a web project based on the original [X (Twitter)](https://x.com
 8. If you click a `cancel button` at any time, a `custom hook` deletes all `localStorage` data except for the `username` and `token`. Every time you enter the `dashboard page`, this same behavior occurs.
 9. Whenever an error happens, like not providing all the fields on a form, an alert is shown.
 
-## Installation
+## Installation (will be updated with MySQL)
 1. **Install PostgreSQL:**
    - Using the pgAdmin tool, create a password for the `postgres` user.
    - Create a database named `nextjs-twitter`.
