@@ -11,18 +11,16 @@ const register = ({ email, username, password, event }:{ email:string, username:
     return;
   }
 
-  const IP = process.env.NEXT_PUBLIC_CASA_IP;
-
-  fetch(`http://${IP}:4000/api/routers/users/register`, {
-    method: "POST",
+  fetch('/api/register', {
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      email: email,
-      username: username,
-      password: password
-    })
+      email,
+      username,
+      password,
+    }),
   })
     .then(res => {
       res.json()
