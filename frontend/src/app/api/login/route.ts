@@ -9,7 +9,6 @@ export async function POST(request: Request) {
     }
 
     const IP = process.env.NEXT_PUBLIC_CASA_IP;
-
     const res = await fetch(`http://${IP}:4000/api/routers/users/login`, {
       method: "POST",
       headers: {
