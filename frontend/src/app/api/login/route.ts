@@ -4,7 +4,7 @@ export async function POST(request: Request) {
   const { username, password } = await request.json();
 
   const IP = process.env.NEXT_PUBLIC_CASA_IP;
-  return fetch(`http://${IP}:4000/api/routers/users/login`, {
+  const res = await fetch(`http://${IP}:4000/api/routers/users/login`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
@@ -14,8 +14,7 @@ export async function POST(request: Request) {
       password: password
     })
   })
-    .then(res => res.json())
-    .then(data => {
-      return NextResponse.json(data);
-    })
+
+  const data = await res.json();
+  return NextResponse.json(data);
 }

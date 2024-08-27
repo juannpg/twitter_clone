@@ -17,9 +17,9 @@ const register = ({ email, username, password, event }:{ email:string, username:
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      email,
-      username,
-      password,
+      email: email,
+      username: username,
+      password: password
     }),
   })
     .then(res => {
