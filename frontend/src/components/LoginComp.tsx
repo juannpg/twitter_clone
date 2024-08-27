@@ -11,17 +11,15 @@ const login = ({ username, password, event }:{ username:string, password:string,
     return;
   }
 
-  const IP = process.env.NEXT_PUBLIC_CASA_IP;
-
-  fetch(`http://${IP}:4000/api/routers/users/login`, {
-    method: "POST",
+  fetch('/api/login', {
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      username: username,
-      password: password
-    })
+      username,
+      password,
+    }),
   })
     .then(res => res.json())
     .then(data => {
