@@ -10,8 +10,8 @@ export async function POST(request: Request) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      username: username,
-      password: password
+      username: username as string,
+      password: password as string,
     })
   })
 
