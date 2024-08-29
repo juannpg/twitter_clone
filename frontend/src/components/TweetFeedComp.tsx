@@ -26,14 +26,8 @@ const seeReplies = ({ id, content, username }:{ id:number ,content:string, usern
     return;
   }
 
-  const IP = process.env.NEXT_PUBLIC_CASA_IP;
-
-  fetch(`http://${IP}:4000/api/routers/replies/getRepliesTweet?id=${seeRepliesId}`, {
-    method: "GET",
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
+  
+  fetch(`http://localhost:3000/api/tweetFeedSeeReplies?seeRepliesId=${seeRepliesId}`)
 }
 
 export default function TweetFeedComp({id ,content, username,  isReplying}:{id:number ,content:string, username:string, isReplying: boolean}) {  

@@ -5,9 +5,10 @@ export async function GET() {
 
   const response = await fetch(`http://${IP}:4000/api/routers/tweets/getTweets`, { cache: 'no-store' } );
   const data = await response.json();
+  const tweets = data.tweets;
 
   await new Promise(delay => setTimeout(delay, 3000));
 
-  return NextResponse.json(data);
+  return NextResponse.json(tweets);
 
 }

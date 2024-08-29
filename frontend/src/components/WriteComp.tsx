@@ -24,24 +24,29 @@ const write = ({ endpoint, action, content }:{ endpoint:string, action:string, c
     return;
   }
 
-  const IP = process.env.NEXT_PUBLIC_CASA_IP;
-
-  fetch(`http://${IP}:4000/api/routers/${endpoint}`, {
-    method: "POST",
+  fetch('http://localhost:3000/api/write', {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify({
       content: content,
       tweetId: replyingTweetId,
+      endpoint: endpoint,
+      token: token,
     })
   }).then(() => {
+
+    if (action === 'create_tweet') {
+      window.location.href = "/dashboard"
+    } else if (action === 'reply_tweet') {
+      localStorage.setItem('seeRepliesId', replyingTweetId.toString());
+      window.location.href = "/replies"
+    }
+
     localStorage.removeItem('replyingTweetId');
     localStorage.removeItem('replyingTweetContent');
     localStorage.removeItem('replyingTweetUsername');
-
-    window.location.href = "/dashboard"
   })
 }
 

@@ -5,7 +5,7 @@ async function getTweets(){
     cache: 'no-store',
   });
   const data = await response.json();  
-  return data.tweets;
+  return data;
 }
 
 export default async function TweetsFeedSec() {

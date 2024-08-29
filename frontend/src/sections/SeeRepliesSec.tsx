@@ -2,15 +2,10 @@ import RepliesTweetComp from "@/components/RepliesTweetComp";
 import TweetFeedComp from "@/components/TweetFeedComp";
 
 async function fetchReplies() {
-  const IP = process.env.NEXT_PUBLIC_CASA_IP;
-
-  const response = await fetch(`http://${IP}:4000/api/routers/replies/getReplies`, { cache: 'no-store' } );
+  const response = await fetch('http://localhost:3000/api/seeReplies', { cache: 'no-store' } );
   const data = await response.json();
-  const replies = data.replies;
   
-  await new Promise(delay => setTimeout(delay, 2500));
-
-  return replies;
+  return data;
 }
 
 export default async function SeeRepliesSec() {
