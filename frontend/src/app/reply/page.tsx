@@ -16,7 +16,7 @@ export default function ReplyPage() {
         <ReplyingTweetComp />
       </Suspense>
       <h1 className='mt-1 mb-1 bg-opacity-35 bg-black px-3 py-2 border-none rounded-md'>Your reply:</h1>
-      <WriteComp endpoint="replies/replyTweet" action={``}/>
+      <WriteComp endpoint="replies/replyTweet" action='reply_tweet'/>
       <HrefBtnComp route="/dashboard" text="Cancel" />
     </main>
   )
