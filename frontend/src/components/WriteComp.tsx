@@ -36,26 +36,20 @@ const write = ({ endpoint, action, content }:{ endpoint:string, action:string, c
       token: token,
     })
   }).then(() => {
-
-    if (action === 'create_tweet') {
-      window.location.href = "/dashboard"
-    } else if (action === 'reply_tweet') {
-      localStorage.setItem('seeRepliesId', replyingTweetId.toString());
-      window.location.href = "/replies"
-    }
-
     localStorage.removeItem('replyingTweetId');
     localStorage.removeItem('replyingTweetContent');
     localStorage.removeItem('replyingTweetUsername');
+
+    window.location.href = "/dashboard"
   })
 }
 
-export default function WriteComp({ endpoint, action }:{ endpoint:string, action:string }) {
+export default function WriteComp({ endpoint, action, title }:{ endpoint:string, action:string, title?:string }) {
   const [content, setContent] = useState('')
   
   return(
     <main className='w-[340px] md:w-[680px]'>
-      <h1 className="text-primary font-semibold mb-2">{action}</h1>
+      <h1 className="text-primary font-semibold mb-2">{title && title}</h1>
       <div className="relative">
         <textarea
           placeholder="Content"

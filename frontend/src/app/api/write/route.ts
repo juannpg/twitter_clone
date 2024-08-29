@@ -1,3 +1,5 @@
+import { NextResponse } from 'next/server';
+
 export async function POST(request: Request) {
   const { content, tweetId, endpoint, token } = await request.json();
   
@@ -13,4 +15,6 @@ export async function POST(request: Request) {
       tweetId: tweetId,
     })
   })
+
+  return new NextResponse(null, { status: 200 });
 }

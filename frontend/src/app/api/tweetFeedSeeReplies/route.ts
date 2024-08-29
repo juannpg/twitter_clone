@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export function GET(request: NextRequest) {
   const seeRepliesId = request.nextUrl.searchParams.get('seeRepliesId');
@@ -10,4 +10,6 @@ export function GET(request: NextRequest) {
       'Content-Type': 'application/json',
     }
   })
+
+  return new NextResponse(null, { status: 200 });
 }
