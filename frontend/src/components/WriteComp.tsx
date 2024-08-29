@@ -24,7 +24,8 @@ const write = ({ endpoint, action, content }:{ endpoint:string, action:string, c
     return;
   }
 
-  fetch('http://localhost:3000/api/write', {
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  fetch(`${apiBaseUrl}/api/write`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

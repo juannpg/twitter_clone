@@ -11,7 +11,8 @@ const register = ({ email, username, password, event }:{ email:string, username:
     return;
   }
 
-  fetch('/api/register', {
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  fetch(`${apiBaseUrl}/api/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

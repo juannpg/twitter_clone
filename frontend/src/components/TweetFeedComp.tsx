@@ -26,8 +26,8 @@ const seeReplies = ({ id, content, username }:{ id:number ,content:string, usern
     return;
   }
 
-  
-  fetch(`http://localhost:3000/api/tweetFeedSeeReplies?seeRepliesId=${seeRepliesId}`)
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  fetch(`${apiBaseUrl}/api/tweetFeedSeeReplies?seeRepliesId=${seeRepliesId}`)
 }
 
 export default function TweetFeedComp({id ,content, username,  isReplying}:{id:number ,content:string, username:string, isReplying: boolean}) {  

@@ -16,7 +16,7 @@ server.use('/api/routers/tweets', tweetsRouter);
 server.use('/api/routers/replies', repliesRouter);
 
 const PORT = 4000;
-const IP = process.env.CASA_IP;
+const IP = process.env.SERVER_IP;
 server.listen(PORT, `${IP}`, () => {
   console.log(`Server is running!`);
 });

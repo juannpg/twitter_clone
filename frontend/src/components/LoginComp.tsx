@@ -11,7 +11,8 @@ const login = ({ username, password, event }:{ username:string, password:string,
     return;
   }
 
-  fetch('/api/login', {
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  fetch(`${apiBaseUrl}/api/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

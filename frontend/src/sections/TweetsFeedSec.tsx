@@ -1,7 +1,8 @@
 import TweetFeedComp from "@/components/TweetFeedComp";
 
 async function getTweets(){
-  const response = await fetch('http://localhost:3000/api/tweetFeed', {
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const response = await fetch(`${apiBaseUrl}/api/tweetFeed`, {
     cache: 'no-store',
   });
   const data = await response.json();  

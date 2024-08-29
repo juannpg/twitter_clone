@@ -2,7 +2,8 @@ import RepliesTweetComp from "@/components/RepliesTweetComp";
 import TweetFeedComp from "@/components/TweetFeedComp";
 
 async function fetchReplies() {
-  const response = await fetch('http://localhost:3000/api/seeReplies', { cache: 'no-store' } );
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const response = await fetch(`${apiBaseUrl}/api/seeReplies`, { cache: 'no-store' } );
   const data = await response.json();
   
   return data;
