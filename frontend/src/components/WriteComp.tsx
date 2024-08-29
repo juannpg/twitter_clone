@@ -24,25 +24,30 @@ const write = ({ endpoint, action, content }:{ endpoint:string, action:string, c
     return;
   }
 
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  fetch(`${apiBaseUrl}/api/write`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      content: content,
-      tweetId: replyingTweetId,
-      endpoint: endpoint,
-      token: token,
-    })
-  }).then(() => {
-    localStorage.removeItem('replyingTweetId');
-    localStorage.removeItem('replyingTweetContent');
-    localStorage.removeItem('replyingTweetUsername');
+  try {
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    fetch(`${apiBaseUrl}/api/write`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: content,
+        tweetId: replyingTweetId,
+        endpoint: endpoint,
+        token: token,
+      })
+    }).then(() => {
+      localStorage.removeItem('replyingTweetId');
+      localStorage.removeItem('replyingTweetContent');
+      localStorage.removeItem('replyingTweetUsername');
 
-    window.location.href = "/dashboard"
-  })
+      window.location.href = "/dashboard"
+    })
+  } catch (error) {
+    console.error("Error writing tweet:", error);
+    return {message: "error writing tweet", error, status: 500};
+  }
 }
 
 export default function WriteComp({ endpoint, action, title }:{ endpoint:string, action:string, title?:string }) {

@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
-  const IP = process.env.NEXT_PUBLIC_SERVER_IP;
-  const response = await fetch(`http://${IP}:4000/api/routers/replies/getReplies`, { cache: 'no-store' } );
-  const data = await response.json();
-  const replies = data.replies;
-  
-  await new Promise(delay => setTimeout(delay, 2500));
+  try {
+    const IP = process.env.NEXT_PUBLIC_SERVER_IP;
+    const response = await fetch(`http://${IP}:4000/api/routers/replies/getReplies`, { cache: 'no-store' } );
+    const data = await response.json();
+    const replies = data.replies;
+    
+    await new Promise(delay => setTimeout(delay, 2500));
 
-  return NextResponse.json(replies);
+    return NextResponse.json(replies);
+  } catch (error) {
+    return NextResponse.json({message: "error getting replies", error, status: 500});
+  }
 }

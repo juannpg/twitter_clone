@@ -1,12 +1,17 @@
 import TweetFeedComp from "@/components/TweetFeedComp";
 
 async function getTweets(){
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const response = await fetch(`${apiBaseUrl}/api/tweetFeed`, {
-    cache: 'no-store',
-  });
-  const data = await response.json();  
-  return data;
+  try {
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const response = await fetch(`${apiBaseUrl}/api/tweetFeed`, {
+      cache: 'no-store',
+    });
+    const data = await response.json();  
+    return data;
+  } catch (error) {
+    console.error("Error getting tweets:", error);
+    return {message: "error getting tweets", error, status: 500};
+  }
 }
 
 export default async function TweetsFeedSec() {

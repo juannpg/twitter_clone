@@ -11,23 +11,28 @@ const login = ({ username, password, event }:{ username:string, password:string,
     return;
   }
 
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  fetch(`${apiBaseUrl}/api/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      username: username,
-      password: password
-    }),
-  })
-    .then(res => res.json())
-    .then(data => {
-      localStorage.setItem('token', data.user.token)
-      localStorage.setItem('username', data.user.username)
-      window.location.href = "/dashboard";
+  try {
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    fetch(`${apiBaseUrl}/api/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password
+      }),
     })
+      .then(res => res.json())
+      .then(data => {
+        localStorage.setItem('token', data.user.token)
+        localStorage.setItem('username', data.user.username)
+        window.location.href = "/dashboard";
+      })
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return {message: "error logging in", error, status: 500};
+  }
 }
 
 export default function LoginComp() {
