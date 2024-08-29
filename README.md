@@ -59,6 +59,3 @@ Twitter Clone is a web project based on the original [X (Twitter)](https://x.com
 
 ### MySQL
 * I plan to migrate the project to use MySQL instead of PostgreSQL to simplify the installation process.
-
-### Next API Routing
-* I plan on adding **Next API Routing** for every fetch on the frontend.
