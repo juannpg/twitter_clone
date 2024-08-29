@@ -27,10 +27,12 @@ const seeReplies = ({ id, content, username }:{ id:number ,content:string, usern
   }
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  try {fetch(`${apiBaseUrl}/api/tweetFeedSeeReplies?seeRepliesId=${seeRepliesId}`)} catch (error) {
-    console.error("Error fetching replies:", error);
-    return {message: "error fetching replies", error, status: 500};
-  }
+  fetch(`${apiBaseUrl}/api/tweetFeedSeeReplies?seeRepliesId=${seeRepliesId}`).then((response) => {
+    if (!response.ok) {
+      alert("Failed to fetch replies");
+      throw new Error('Failed to fetch replies');
+    }
+  })
 }
 
 export default function TweetFeedComp({id ,content, username,  isReplying}:{id:number ,content:string, username:string, isReplying: boolean}) {  

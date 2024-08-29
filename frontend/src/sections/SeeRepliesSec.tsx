@@ -2,16 +2,17 @@ import RepliesTweetComp from "@/components/RepliesTweetComp";
 import TweetFeedComp from "@/components/TweetFeedComp";
 
 async function fetchReplies() {
-  try {
-    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const response = await fetch(`${apiBaseUrl}/api/seeReplies`, { cache: 'no-store' } );
-    const data = await response.json();
-    
-    return data;
-  } catch (error) {
-    console.error("Error getting replies:", error);
-    return {message: "error getting replies", error, status: 500};
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const response = await fetch(`${apiBaseUrl}/api/seeReplies`, { cache: 'no-store' } );
+
+  if (!response.ok) {
+    alert("Failed to fetch replies");
+    throw new Error('Failed to fetch replies');
   }
+
+  const data = await response.json();
+  return data;
+
 }
 
 export default async function SeeRepliesSec() {

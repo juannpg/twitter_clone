@@ -11,27 +11,25 @@ const register = ({ email, username, password, event }:{ email:string, username:
     return;
   }
 
-  try {
-    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-    fetch(`${apiBaseUrl}/api/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        username: username,
-        password: password
-      }),
-    })
-      .then(res => {
-        res.json()
-        window.location.href = "./login";
-      })
-  } catch (error) {
-    console.error("Error registering:", error);
-    return {message: "error registering", error, status: 500};
-  }
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  fetch(`${apiBaseUrl}/api/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+      username: username,
+      password: password
+    }),
+  }).then((response) => {
+    if (!response.ok) {
+      alert("Failed to register");
+      throw new Error('Failed to register');
+    }
+    response.json()
+    window.location.href = "./login";
+  })
 }
 
 export default function RegisterComp() {
