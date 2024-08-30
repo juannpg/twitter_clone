@@ -5,7 +5,6 @@ export async function POST(request: Request) {
     const { username, password } = await request.json();
 
     const IP = process.env.NEXT_PUBLIC_SERVER_IP;
-    // tienes q esperar el fetch para q la función no acabe antes de que el fetch termine. SI eso pasa, el frontend no recibe el fetch cuando la funcion acaba.
     const response = await fetch(`http://${IP}:4000/api/routers/users/login`, {
       method: "POST",
       headers: {
@@ -30,5 +29,4 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json({message: "error loging in", error}, {status: 500});
   }
-  // sin el await, la función termina
 }

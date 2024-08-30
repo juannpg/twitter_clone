@@ -22,8 +22,9 @@ const register = ({ email, username, password, event }:{ email:string, username:
       username: username,
       password: password
     }),
-  }).then((response) => {
-    
+  })
+  
+  .then((response) => {  
     if (!response.ok) {
       alert("Failed to register");
       throw new Error('Failed to register');

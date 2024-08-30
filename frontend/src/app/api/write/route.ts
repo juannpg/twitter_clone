@@ -15,7 +15,9 @@ export async function POST(request: Request) {
         content: content,
         tweetId: tweetId,
       })
-    }).then(response => {
+    })
+    
+    .then(response => {
       if (!response.ok) {
         const errorResponse = response.json();
         console.error("Failed to write:", errorResponse);

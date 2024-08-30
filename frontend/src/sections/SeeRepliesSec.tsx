@@ -3,7 +3,7 @@ import TweetFeedComp from "@/components/TweetFeedComp";
 
 async function fetchReplies() {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const response = await fetch(`${apiBaseUrl}/api/seeReplies`, { cache: 'no-store' } );
+  const response = await fetch(`${apiBaseUrl}/api/seeReplies`, { cache: 'no-store' });
 
   if (!response.ok) {
     alert("Failed to fetch replies");
@@ -28,7 +28,13 @@ export default async function SeeRepliesSec() {
         <h2>Replies:</h2><div className='flex flex-col items-end bg-black bg-opacity-20 border-none rounded-xl px-3 py-2 mt-2 mb-2'>
           <div className='w-5/6'>
             {replies.map((reply: { id: number; content: string; username: string; }, index: number) => (
-              <TweetFeedComp key={index} id={reply.id} content={reply.content} username={reply.username} isReplying={true} />
+              <TweetFeedComp
+                key={index}
+                id={reply.id}
+                content={reply.content}
+                username={reply.username}
+                isReplying={true}
+              />
             ))}
           </div>
         </div>

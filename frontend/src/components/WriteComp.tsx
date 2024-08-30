@@ -19,8 +19,13 @@ const write = ({ endpoint, action, content }:{ endpoint:string, action:string, c
     return;
   }
 
-  if (!content || content.length > 250) {
+  if (!content) {
     alert("Invalid content");
+    return;
+  }
+
+  if (content.length > 250) {
+    alert("Tweets cannot exceed 250 characters");
     return;
   }
 
@@ -36,18 +41,21 @@ const write = ({ endpoint, action, content }:{ endpoint:string, action:string, c
       endpoint: endpoint,
       token: token,
     })
-  }).then((response) => {
+  })
+
+  .then((response) => {
     if (!response.ok) {
       alert("Failed to write tweet");
       throw new Error('Failed to write tweet');
     }
-  }).then(() => {
+  })
+  
+  .then(() => {
     localStorage.removeItem('replyingTweetId');
     localStorage.removeItem('replyingTweetContent');
     localStorage.removeItem('replyingTweetUsername');
     window.location.href = "/dashboard"
   })
-
 }
 
 export default function WriteComp({ endpoint, action, title }:{ endpoint:string, action:string, title?:string }) {

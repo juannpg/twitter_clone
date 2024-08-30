@@ -53,13 +53,16 @@ router.post('/login', async(req, res) => {
     })
 
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Invalid username or password' });
     }
 
-    const passVerify = await argon2.verify(user.password as string, password as string);
+    const passVerify = await argon2.verify(
+      user.password as string,
+      password as string
+    );
 
     if (!passVerify) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Wrong password' });
     }
 
     return res.status(200).json({ message: 'Login successful', user });

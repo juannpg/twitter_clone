@@ -21,18 +21,21 @@ const login = ({ username, password, event }:{ username:string, password:string,
       username: username,
       password: password
     }),
-  }).then((response) => {
+  })
+  
+  .then((response) => {
     if (!response.ok) {
       alert("Failed to login");
       throw new Error('Failed to login');
     }
     return response.json()
-  }).then(data => {
-      localStorage.setItem('token', data.user.token)
-      localStorage.setItem('username', data.user.username)
-      window.location.href = "/dashboard";
-    })
-
+  })
+  
+  .then(data => {
+    localStorage.setItem('token', data.user.token)
+    localStorage.setItem('username', data.user.username)
+    window.location.href = "/dashboard";
+  })
 }
 
 export default function LoginComp() {

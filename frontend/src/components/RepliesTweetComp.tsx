@@ -30,12 +30,12 @@ export default function ReplyingTweetComp() {
       ) : (
         <>
           {seeRepliesId && seeRepliesContent && seeRepliesUsername ? (
-          <> 
-            <div className='mt-1 mb-3 bg-opacity-50 bg-black px-3 py-2 border-none rounded-md'>
-              {seeRepliesId && <h1 className="text-text font-semibold">Replies to {seeRepliesUsername}&apos;s tweet</h1>}
-            </div>
-              <TweetFeedComp id={Number(seeRepliesId)} content={seeRepliesContent} username={seeRepliesUsername} isReplying={true} />
-          </>
+            <> 
+              <div className='mt-1 mb-3 bg-opacity-50 bg-black px-3 py-2 border-none rounded-md'>
+                {seeRepliesId && <h1 className="text-text font-semibold">Replies to {seeRepliesUsername}&apos;s tweet</h1>}
+              </div>
+                <TweetFeedComp id={Number(seeRepliesId)} content={seeRepliesContent} username={seeRepliesUsername} isReplying={true} />
+            </>
           ) : (
             <h1 className='text-text mb-2'>Not found | 404</h1>
           )}
