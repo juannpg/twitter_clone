@@ -6,6 +6,8 @@ const router = express.Router()
 
 router.post('/register', async(req, res) => {
   const { email, username, password } = req.body;
+
+  // hashing the password
   const hashedPassword = await argon2.hash(password);
 
   if ( !email || !username || !password) {
@@ -17,6 +19,7 @@ router.post('/register', async(req, res) => {
       data: {
         email: email as string,
         username: username as string,
+        // using the hashed password
         password: hashedPassword as string,
       },
     })
@@ -56,6 +59,7 @@ router.post('/login', async(req, res) => {
       return res.status(400).json({ message: 'Invalid username or password' });
     }
 
+    // decrypting the password
     const passVerify = await argon2.verify(
       user.password as string,
       password as string

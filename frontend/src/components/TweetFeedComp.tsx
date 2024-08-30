@@ -43,6 +43,7 @@ export default function TweetFeedComp({id ,content, username,  isReplying}:{id:n
       <div className='border rounded-lg px-2 py-1 mt-2'>
         <p>{content}</p>
       </div>
+        {/* if the user is already replying or watching replies, then the reply and see replies buttons are hidden */}
         {isReplying == false && (
           <div className='flex items-center h-11'>
             <button 

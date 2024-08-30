@@ -3,7 +3,10 @@ import TweetFeedComp from "@/components/TweetFeedComp";
 
 async function fetchReplies() {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const response = await fetch(`${apiBaseUrl}/api/seeReplies`, { cache: 'no-store' });
+  const response = await fetch(`${apiBaseUrl}/api/seeReplies`, {
+    // don't cache the response so that the tweets are always fresh
+    cache: 'no-store'
+  });
 
   if (!response.ok) {
     alert("Failed to fetch replies");

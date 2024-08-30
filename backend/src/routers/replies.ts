@@ -40,6 +40,7 @@ router.post('/replyTweet', verifyToken, async(req, res) => {
   }
 })
 
+// store the tweet we want to see the replies of
 let storedRepliesTweet: any;
 
 router.get('/getRepliesTweet', async(req, res) => {
@@ -56,6 +57,7 @@ router.get('/getRepliesTweet', async(req, res) => {
       },
     })
 
+    // after getting the tweet with the id gotten from the url, store it
     storedRepliesTweet = repliesTweet;
     
   } catch (error) {
@@ -67,6 +69,7 @@ router.get('/getReplies', async(req, res) => {
   try {
     const replies = await prisma.reply.findMany({
       where: {
+        // use the id we stored in the previous route
         tweetId: storedRepliesTweet.id as number,
       },
       select: {

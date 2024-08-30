@@ -29,6 +29,7 @@ export default function ReplyingTweetComp() {
         <h1 className='text-text mb-2'>Loading...</h1>
       ) : (
         <>
+          {/* this prevents the user from seeing empty boxes if an error occurs in the localStorage */}
           {seeRepliesId && seeRepliesContent && seeRepliesUsername ? (
             <> 
               <div className='mt-1 mb-3 bg-opacity-50 bg-black px-3 py-2 border-none rounded-md'>

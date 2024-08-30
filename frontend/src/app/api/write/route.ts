@@ -12,8 +12,8 @@ export async function POST(request: Request) {
         'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({
-        content: content,
-        tweetId: tweetId,
+        content: content as string,
+        tweetId: tweetId as string,
       })
     })
     
