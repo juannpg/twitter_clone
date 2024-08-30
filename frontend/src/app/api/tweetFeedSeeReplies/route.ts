@@ -15,6 +15,6 @@ export function GET(request: NextRequest) {
     return new NextResponse(null, { status: 200 });
 
   } catch (error) {
-    return NextResponse.json({message: "error getting replies tweet", error, status: 500 });
+    return NextResponse.json({message: "error getting replies tweet", error}, {status: 500 });
   }
 }

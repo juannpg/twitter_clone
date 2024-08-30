@@ -9,8 +9,14 @@ export async function GET(request: Request) {
     
     await new Promise(delay => setTimeout(delay, 2500));
 
-    return NextResponse.json(replies);
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.error("Failed to register:", errorResponse);
+      return NextResponse.json({message: "error registering", error: errorResponse}, {status: 400});
+    }
+
+    return NextResponse.json(replies, {status: 200});
   } catch (error) {
-    return NextResponse.json({message: "error getting replies", error, status: 500});
+    return NextResponse.json({message: "error getting replies", error}, {status: 500});
   }
 }

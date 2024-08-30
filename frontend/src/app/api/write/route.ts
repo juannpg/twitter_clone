@@ -15,11 +15,17 @@ export async function POST(request: Request) {
         content: content,
         tweetId: tweetId,
       })
+    }).then(response => {
+      if (!response.ok) {
+        const errorResponse = response.json();
+        console.error("Failed to write:", errorResponse);
+        return NextResponse.json({message: "error writing", error: errorResponse}, {status: 400});
+      }
     })
-
+    
     return new NextResponse(null, { status: 200 });
   
   } catch (error) {
-    return NextResponse.json({message: "error writing tweet", error, status: 500});
+    return NextResponse.json({message: "error writing tweet", error}, {status: 500});
   }
 }

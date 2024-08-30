@@ -23,11 +23,12 @@ const register = ({ email, username, password, event }:{ email:string, username:
       password: password
     }),
   }).then((response) => {
+    
     if (!response.ok) {
       alert("Failed to register");
       throw new Error('Failed to register');
     }
-    response.json()
+
     window.location.href = "./login";
   })
 }

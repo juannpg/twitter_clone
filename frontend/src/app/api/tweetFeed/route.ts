@@ -10,9 +10,15 @@ export async function GET() {
 
     await new Promise(delay => setTimeout(delay, 3000));
 
-    return NextResponse.json(tweets);
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.error("Failed to register:", errorResponse);
+      return NextResponse.json({message: "error registering", error: errorResponse}, {status: 400});
+    }
+
+    return NextResponse.json(tweets, {status: 200});
 
   } catch (error) {
-    return NextResponse.json({message: "error getting tweets", error, status: 500});
+    return NextResponse.json({message: "error getting tweets", error}, {status: 500});
   }
 }

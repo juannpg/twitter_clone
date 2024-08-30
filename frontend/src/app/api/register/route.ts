@@ -17,8 +17,14 @@ export async function POST(request: Request) {
       })
     })
 
-    return NextResponse.json(response);
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      console.error("Failed to register:", errorResponse);
+      return NextResponse.json({message: "error registering", error: errorResponse}, {status: 400});
+    }
+
+    return NextResponse.json(response, {status: 200});
   } catch (error) {
-    return NextResponse.json({message: "error registering", error, status: 500});
+    return NextResponse.json({message: "error registering", error}, {status: 500});
   }
 }

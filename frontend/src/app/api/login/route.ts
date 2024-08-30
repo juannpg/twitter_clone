@@ -18,10 +18,17 @@ export async function POST(request: Request) {
     })
 
     const data = await response.json();
-    return NextResponse.json(data);
+
+    if (!response.ok) {
+      const errorResponse = data;
+      console.error("Failed to register:", errorResponse);
+      return NextResponse.json({message: "error registering", error: errorResponse}, {status: 400});
+    }
+
+    return NextResponse.json(data, {status: 200});
     
   } catch (error) {
-    return NextResponse.json({message: "error loging in", error, status: 500});
+    return NextResponse.json({message: "error loging in", error}, {status: 500});
   }
   // sin el await, la función termina
 }
