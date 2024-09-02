@@ -40,7 +40,7 @@ router.post('/replyTweet', verifyToken, async(req, res) => {
   }
 })
 
-// store the tweet we want to see the replies of
+// store the tweet we want to see the replies of to acces its id
 let storedRepliesTweet: any;
 
 router.get('/getRepliesTweet', async(req, res) => {
