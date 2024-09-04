@@ -1,9 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
+    const seeRepliesId = request.nextUrl.searchParams.get('id');
+
     const IP = process.env.NEXT_PUBLIC_SERVER_IP;
-    const response = await fetch(`http://${IP}:4000/api/routers/replies/getReplies`, { cache: 'no-store' } );
+    const response = await fetch(`http://${IP}:4000/api/replies/getReplies?id=${seeRepliesId}`, { cache: 'no-store' } );
     const data = await response.json();
     const replies = data.replies;
     

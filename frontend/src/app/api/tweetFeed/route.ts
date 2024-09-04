@@ -4,7 +4,7 @@ export async function GET() {
   try {
     const IP = process.env.NEXT_PUBLIC_SERVER_IP;
 
-    const response = await fetch(`http://${IP}:4000/api/routers/tweets/getTweets`, { cache: 'no-store' } );
+    const response = await fetch(`http://${IP}:4000/api/tweets/getTweets`, { cache: 'no-store' } );
     const data = await response.json();
     const tweets = data.tweets;
 

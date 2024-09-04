@@ -20,19 +20,11 @@ const seeReplies = ({ id, content, username }:{ id:number ,content:string, usern
   localStorage.setItem('seeRepliesContent', content);
   localStorage.setItem('seeRepliesUsername', username);
   
-  const seeRepliesId = localStorage.getItem('seeRepliesId');
+  const queryString = new URLSearchParams({
+    seeRepliesId: id.toString(),
+  }).toString();
 
-  if (!seeRepliesId) {
-    return;
-  }
-
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  fetch(`${apiBaseUrl}/api/tweetFeedSeeReplies?seeRepliesId=${seeRepliesId}`).then((response) => {
-    if (!response.ok) {
-      alert("Failed to fetch replies");
-      throw new Error('Failed to fetch replies');
-    }
-  })
+  window.location.href = `/replies?${queryString}`;
 }
 
 export default function TweetFeedComp({id ,content, username,  isReplying}:{id:number ,content:string, username:string, isReplying: boolean}) {  
@@ -53,7 +45,6 @@ export default function TweetFeedComp({id ,content, username,  isReplying}:{id:n
             <a
               className='absolute right-16 underline' 
               onClick={() => seeReplies({ id, content, username })}
-              href='/replies'
               >See replies</a>
           </div>
         )}

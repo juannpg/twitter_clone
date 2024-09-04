@@ -5,7 +5,7 @@ export async function POST(request: Request) {
     const { content, tweetId, endpoint, token } = await request.json();
     
     const IP = process.env.NEXT_PUBLIC_SERVER_IP;
-    fetch(`http://${IP}:4000/api/routers/${endpoint}`, {
+    fetch(`http://${IP}:4000/api/${endpoint}`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
