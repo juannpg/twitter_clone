@@ -43,7 +43,7 @@ public class RepliesController : ControllerBase
 
 
   [HttpGet("getReplies")]
-  public async Task<ActionResult<Tweet>> GetRepliesTweet([FromQuery] string id)
+  public async Task<ActionResult<<IEnumerable<Tweet>>> GetRepliesTweet([FromQuery] string id)
   {
     var idNumber = int.Parse(id);
 
