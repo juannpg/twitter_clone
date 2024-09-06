@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <main className='h-screen flex flex-col items-center justify-center'>
-      <h1 className='text-primary mb-4 text-4xl hover:-rotate-12 transition border border-secondary bg-secondary rounded-xl hover:border-dashed px-2 py-2'>Welcome back Fella!</h1>
+      <h1 className='text-primary mb-4 text-4xl hover:scale-105 transition border border-secondary bg-secondary rounded-xl hover:border-dashed px-2 py-2'>Welcome back!</h1>
       <LoginComp />
       <HrefBtnComp route="/" text="Go to /Register" />
     </main>

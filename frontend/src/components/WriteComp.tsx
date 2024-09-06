@@ -5,7 +5,7 @@ import { useState } from 'react'
 const write = ({ endpoint, action, content }:{ endpoint:string, action:string, content:string }) => {
   const token = localStorage.getItem('token');  
   // if the user isn't replying to a tweet, then the replyingTweetId is 'noReply'
-  const replyingTweetId = localStorage.getItem('replyingTweetId') || 'noReply';
+  const replyingTweetId = localStorage.getItem('replyingTweetId') || false;
   const location = window.location.pathname;
 
   if (!token) {
@@ -15,7 +15,7 @@ const write = ({ endpoint, action, content }:{ endpoint:string, action:string, c
   }
 
   // this prevents the user from accessing the /reply page when they are not replying to a tweet
-  if (replyingTweetId === 'noReply' && location === '/reply') {
+  if (replyingTweetId === false && location === '/reply') {
     alert("why are u here?");
     window.location.href = "/dashboard";
     return;

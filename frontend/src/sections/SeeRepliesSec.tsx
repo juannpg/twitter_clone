@@ -10,8 +10,9 @@ async function fetchReplies(seeRepliesId: string) {
   });
 
   if (!response.ok) {
-    alert("Failed to fetch replies");
-    throw new Error('Failed to fetch replies');
+    const ok = false;
+    console.log("failed to fetch replies");
+    return ok;
   }
 
   const data = await response.json();
@@ -25,8 +26,10 @@ export default async function SeeRepliesSec({seeRepliesId}:{seeRepliesId:string}
   return (
     <main className="flex flex-col text-text text-center bg-black bg-opacity-35 py-2 px-4 border-none rounded-xl mt-6 mb-5 w-[340px] md:w-[680px]">
       <RepliesTweetComp />
-      {!replies || replies.length === 0 ? (
-        <h1 className='text-text mb-2'>No replies available</h1>
+      {replies === false ? (
+        <h1 className='text-text mb-2'>500 | Error getting replies.</h1>
+      ) : !replies || replies.length === 0 ? (
+        <h1 className="text-text mb2">No replies available</h1>
       ) : (
         <>
         <h2>Replies:</h2><div className='flex flex-col items-end bg-black bg-opacity-20 border-none rounded-xl px-3 py-2 mt-2 mb-2'>
