@@ -2,6 +2,7 @@ using Data;
 using Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Konscious.Security.Cryptography;
 namespace csharp_backend.Controllers;
 
 [ApiController]
@@ -24,6 +25,8 @@ public class UsersController : ControllerBase
   [HttpPost("register")]
   public async Task<ActionResult<User>> Register([FromBody] User user)
   {
+    user.Password = HashPassword(user.Password);
+
     _context.Users.Add(user);
     await _context.SaveChangesAsync();
 
@@ -73,3 +76,16 @@ public class UsersController : ControllerBase
     });
   }
 }
+
+  // Method to hash passwords using Argon2
+  private string HashPassword(string password)
+  {
+    var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
+    argon2.Salt = GenerateSalt();
+    argon2.DegreeOfParallelism = 8; // Number of threads to use
+    argon2.MemorySize = 1024 * 64; // 64 MB
+    argon2.Iterations = 4; // Number of iterations
+
+    var hash = argon2.GetBytes(32); // Generate 256-bit hash
+    return Convert.ToBase64String(hash);
+  }
