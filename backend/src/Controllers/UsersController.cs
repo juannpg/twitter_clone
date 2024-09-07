@@ -2,6 +2,8 @@ using Data;
 using Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BCrypt.Net;
+
 namespace csharp_backend.Controllers;
 
 [ApiController]
@@ -15,6 +17,13 @@ public class UsersController : ControllerBase
     _context = context;
   }
 
+  public class RegisterDto
+  {
+    public required string Email { get; set; }
+    public required string Username { get; set; }
+    public required string Password { get; set; }
+  }
+
   public class LoginDto
   {
     public required string Username { get; set; }
@@ -22,8 +31,15 @@ public class UsersController : ControllerBase
   }
 
   [HttpPost("register")]
-  public async Task<ActionResult<User>> Register([FromBody] User user)
+  public async Task<ActionResult<User>> Register([FromBody] RegisterDto registerDto)
   {
+    var user = new User
+    {
+      Email = registerDto.Email,
+      Username = registerDto.Username,
+      Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
+    };
+
     _context.Users.Add(user);
     await _context.SaveChangesAsync();
 
@@ -31,13 +47,17 @@ public class UsersController : ControllerBase
     {
       return StatusCode(400, new
       {
-        Message ="Error creating user"
+        Message = "Error creating user"
       });
     }
 
-    return StatusCode(200, new{
+    return StatusCode(200, new
+    {
       Message = "Register successful",
-      User = user
+      User = new
+      {
+        Username = user.Username
+      }
     });
   }
 
@@ -48,10 +68,9 @@ public class UsersController : ControllerBase
     var password = loginDto.Password;
 
     var user = await _context.Users
-      .Where(u => u.Username == username && u.Password == password)
+      .Where(u => u.Username == username)
       .Select(u => new
       {
-        Id = u.Id,
         Username = u.Username,
         Password = u.Password,
         Token = u.Token
@@ -62,14 +81,28 @@ public class UsersController : ControllerBase
     {
       return StatusCode(404, new
       {
-        Message ="Invalid credentials"
+        Message = "Invalid credentials"
+      });
+    }
+
+    bool verified = BCrypt.Net.BCrypt.Verify(password, user.Password);
+
+    if (!verified)
+    {
+      return StatusCode(404, new
+      {
+        Message = "Invalid credentials"
       });
     }
 
     return StatusCode(200, new
     {
       Message = "Login successful",
-      User = user
+      User = new
+      {
+        Username = user.Username,
+        Token = user.Token
+      }
     });
   }
 }

@@ -1,6 +1,9 @@
 /bin
 /obj
 /Migrations
+/.vs
 
 appsettings.Development.json
 appsettings.json
+
+backend.csproj.user
