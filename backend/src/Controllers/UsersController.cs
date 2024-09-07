@@ -2,9 +2,7 @@ using Data;
 using Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Konscious.Security.Cryptography;
-using System.Text; // Add this using directive
-using System.Security.Cryptography; // Add this for RNGCryptoServiceProvider
+using BCrypt.Net;
 
 namespace csharp_backend.Controllers;
 
@@ -12,95 +10,99 @@ namespace csharp_backend.Controllers;
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly ApplicationDbContext _context;
+  private readonly ApplicationDbContext _context;
 
-    public UsersController(ApplicationDbContext context)
+  public UsersController(ApplicationDbContext context)
+  {
+    _context = context;
+  }
+
+  public class RegisterDto
+  {
+    public required string Email { get; set; }
+    public required string Username { get; set; }
+    public required string Password { get; set; }
+  }
+
+  public class LoginDto
+  {
+    public required string Username { get; set; }
+    public required string Password { get; set; }
+  }
+
+  [HttpPost("register")]
+  public async Task<ActionResult<User>> Register([FromBody] RegisterDto registerDto)
+  {
+    var user = new User
     {
-        _context = context;
+      Email = registerDto.Email,
+      Username = registerDto.Username,
+      Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
+    };
+
+    _context.Users.Add(user);
+    await _context.SaveChangesAsync();
+
+    if (user == null)
+    {
+      return StatusCode(400, new
+      {
+        Message = "Error creating user"
+      });
     }
 
-    public class LoginDto
+    return StatusCode(200, new
     {
-        public required string Username { get; set; }
-        public required string Password { get; set; }
+      Message = "Register successful",
+      User = new
+      {
+        Username = user.Username
+      }
+    });
+  }
+
+  [HttpPost("login")]
+  public async Task<ActionResult<User>> Login([FromBody] LoginDto loginDto)
+  {
+    var username = loginDto.Username;
+    var password = loginDto.Password;
+
+    var user = await _context.Users
+      .Where(u => u.Username == username)
+      .Select(u => new
+      {
+        Username = u.Username,
+        Password = u.Password,
+        Token = u.Token
+      })
+      .FirstOrDefaultAsync();
+
+    if (user == null)
+    {
+      return StatusCode(404, new
+      {
+        Message = "Invalid credentials"
+      });
     }
 
-    [HttpPost("register")]
-    public async Task<ActionResult<User>> Register([FromBody] User user)
+    bool verified = BCrypt.Net.BCrypt.Verify(password, user.Password);
+
+    if (!verified)
     {
-        user.Password = HashPassword(user.Password);
-
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
-
-        if (user == null)
-        {
-            return StatusCode(400, new
-            {
-                Message = "Error creating user"
-            });
-        }
-
-        return StatusCode(200, new
-        {
-            Message = "Register successful",
-            User = user
-        });
+      return StatusCode(404, new
+      {
+        Message = "Invalid credentials"
+      });
     }
 
-    [HttpPost("login")]
-    public async Task<ActionResult<User>> Login([FromBody] LoginDto loginDto)
+    return StatusCode(200, new
     {
-        var username = loginDto.Username;
-        var password = loginDto.Password;
-
-        var user = await _context.Users
-            .Where(u => u.Username == username && u.Password == password)
-            .Select(u => new
-            {
-                Id = u.Id,
-                Username = u.Username,
-                Password = u.Password,
-                Token = u.Token
-            })
-            .FirstOrDefaultAsync();
-
-        if (user == null)
-        {
-            return StatusCode(404, new
-            {
-                Message = "Invalid credentials"
-            });
-        }
-
-        return StatusCode(200, new
-        {
-            Message = "Login successful",
-            User = user
-        });
-    }
-
-    // Method to hash passwords using Argon2
-    private string HashPassword(string password)
-    {
-        var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
-        argon2.Salt = GenerateSalt();
-        argon2.DegreeOfParallelism = 8; // Number of threads to use
-        argon2.MemorySize = 1024 * 64; // 64 MB
-        argon2.Iterations = 4; // Number of iterations
-
-        var hash = argon2.GetBytes(32); // Generate 256-bit hash
-        return Convert.ToBase64String(hash);
-    }
-
-    // Method to generate a salt
-    private byte[] GenerateSalt()
-    {
-        byte[] salt = new byte[16]; // 128-bit salt
-        using (var rng = new RNGCryptoServiceProvider())
-        {
-            rng.GetBytes(salt);
-        }
-        return salt;
-    }
+      Message = "Login successful",
+      User = new
+      {
+        Username = user.Username,
+        Token = user.Token
+      }
+    });
+  }
 }
