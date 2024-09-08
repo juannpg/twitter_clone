@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(); // añadimos el servicio de controllers + (lin. 34)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -31,6 +31,7 @@ app.UseWhen(context =>
 
 // app.UseHttpsRedirection();
 app.UseRouting();
-app.MapControllers();
+app.MapControllers(); // (lin. 7) + mapeamos los controllers:
+//así nuestra api ya tiene acceso a los controllers.
 
 app.Run();

@@ -1,9 +1,9 @@
 using Data;
-using Models;
+using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-namespace csharp_backend.Controllers;
+namespace backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

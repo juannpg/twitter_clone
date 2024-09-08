@@ -1,20 +1,20 @@
 using Data;
-using Models;
+using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
 
-namespace csharp_backend.Controllers;
+namespace backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController : ControllerBase
+public class UsersController : ControllerBase // es necesario que nuestra clase herede de ControllerBase porque así obtenemos muchas fucionalidades como el uso de HttpContext
 {
-  private readonly ApplicationDbContext _context;
+  private readonly ApplicationDbContext _context; // creamos una variable readonly que nos permite acceder al contexto de la base de datos
 
-  public UsersController(ApplicationDbContext context)
+  public UsersController(ApplicationDbContext context) // contructor que recibe el contexto de la base de datos
   {
-    _context = context;
+    _context = context; // asignamos el contexto a la variable _context para que sea accesible en todas las funciones
   }
 
   public class RegisterDto
