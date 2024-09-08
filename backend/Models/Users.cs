@@ -40,4 +40,14 @@ public class User
   [Column("createdAt")]
   [Required]
   public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+  public enum ERole
+  {
+    User,
+    Admin
+  }
+
+  [Column("role")]
+  [Required]
+  public ERole Role { get; set; } = ERole.User;
 }

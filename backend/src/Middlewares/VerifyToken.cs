@@ -29,6 +29,7 @@ public class VerifyTokenMiddleware
         .Select(u => new
         {
           Username = u.Username,
+          Token = u.Token
         })
         .FirstOrDefaultAsync();
 
@@ -40,6 +41,7 @@ public class VerifyTokenMiddleware
       }
 
       context.Items["username"] = user.Username;
+      context.Items["token"] = user.Token;
     }
 
     await _next(context);

@@ -21,6 +21,36 @@ public class AdminController : ControllerBase
     public required string Id { get; set; }
   }
 
+  [HttpGet("verifyAdmin")]
+  public async Task<ActionResult<bool>> VerifyAdmin()
+  {
+    HttpContext.Items.TryGetValue("token", out var tokenObj);
+    var token = Guid.Parse((string)tokenObj!);
+
+    var user = await _context.Users
+      .Where(u => u.Token == token)
+      .Select(u => new
+      {
+        Role = u.Role
+      })
+      .FirstOrDefaultAsync();
+
+    if (user!.Role == User.ERole.Admin)
+    {
+      return StatusCode(200, new
+      {
+        Message = "Admin verified successfully"
+      });
+    }
+    else
+    {
+      return StatusCode(400, new
+      {
+        Message = "User not admin"
+      });
+    }
+  }
+
   [HttpGet("getUsers")]
   public async Task<ActionResult<IEnumerable<User>>> GetUsers()
   {
@@ -58,6 +88,14 @@ public class AdminController : ControllerBase
     var userToDelete = await _context.Users
       .Where(u => u.Id == idNumber)
       .FirstOrDefaultAsync();
+
+    if (userToDelete == null)
+    {
+      return StatusCode(400, new
+      {
+        Message = "User not found"
+      });
+    }
     
     _context.Users.Remove(userToDelete);
     await _context.SaveChangesAsync();
