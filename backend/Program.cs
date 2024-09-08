@@ -22,7 +22,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseWhen(context =>
   context.Request.Path.Value!.Contains("/replyTweet") ||
-  context.Request.Path.Value.Contains("/createTweet"),
+  context.Request.Path.Value.Contains("/createTweet") ||
+  context.Request.Path.Value.Contains("/verifyAdmin"),
   appBuilder =>
   {
     appBuilder.UseVerifyToken();

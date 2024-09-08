@@ -1,6 +1,7 @@
 import TweetsFeedSec from "@/sections/TweetsFeedSec";
 import WriteComp from "@/components/WriteComp";
 import LogoutBtnComp from "@/components/LogoutBtnComp";
+import AdminPageBtnComp from "@/components/AdminPageBtnComp";
 import UsernameComp from "@/components/UsernameComp";
 import DeleteStorageHook from "@/hooks/DeleteStorageHook";
 import { Suspense } from "react";
@@ -19,6 +20,7 @@ export default function DashboardPage() {
       <DeleteStorageHook />
 
       <UsernameComp />
+      <AdminPageBtnComp />
       <LogoutBtnComp />
       <WriteComp endpoint="tweets/createTweet" action="create_tweet" title="Create a tweet"/>
       <Suspense fallback={<TweetFeedSkeleton />}>

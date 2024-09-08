@@ -25,7 +25,7 @@ public class AdminController : ControllerBase
   public async Task<ActionResult<bool>> VerifyAdmin()
   {
     HttpContext.Items.TryGetValue("token", out var tokenObj);
-    var token = Guid.Parse((string)tokenObj!);
+    var token = (Guid)tokenObj!;
 
     var user = await _context.Users
       .Where(u => u.Token == token)
@@ -34,20 +34,15 @@ public class AdminController : ControllerBase
         Role = u.Role
       })
       .FirstOrDefaultAsync();
-
-    if (user!.Role == User.ERole.Admin)
+    
+    var role = user!.Role.ToString();
+    if (role == "Admin")
     {
-      return StatusCode(200, new
-      {
-        Message = "Admin verified successfully"
-      });
+      return true;
     }
     else
     {
-      return StatusCode(400, new
-      {
-        Message = "User not admin"
-      });
+      return false;
     }
   }
 
