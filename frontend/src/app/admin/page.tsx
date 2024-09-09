@@ -36,7 +36,22 @@ export default function AdminPage() {
         <main className='h-screen flex flex-col items-center justify-center'>
           <h1 className='text-4xl mb-1'>Admin Dashboard</h1>
           <div>
-            <h2>bla bla bla admin routers bla bla bla</h2>
+            <h2>Get Users</h2>
+          </div>
+          <div>
+            <h2>Delete User</h2>
+          </div>
+          <div>
+            <h2>Get Tweets</h2>
+          </div>
+          <div>
+            <h2>Delete Tweet</h2>
+          </div>
+          <div>
+            <h2>Get Replies</h2>
+          </div>
+          <div>
+            <h2>Delete Replies</h2>
           </div>
         </main>
       ) : (
