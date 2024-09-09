@@ -20,13 +20,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseWhen(context =>
+app.UseWhen(context =>  
   context.Request.Path.Value!.Contains("/replyTweet") ||
-  context.Request.Path.Value.Contains("/createTweet") ||
-  context.Request.Path.Value.Contains("/verifyAdmin"),
+  context.Request.Path.Value.Contains("/createTweet"),
   appBuilder =>
   {
     appBuilder.UseVerifyToken();
+  }
+);
+
+app.UseWhen(context =>
+  context.Request.Path.Value!.Contains("/admin"),
+  appBuilder =>
+  {
+    appBuilder.UseVerifyToken();
+    appBuilder.UseVerifyAdmin();
   }
 );
 

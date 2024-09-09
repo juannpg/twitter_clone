@@ -11,10 +11,14 @@ export async function POST(request: Request) {
         'Authorization': `Bearer ${token}`
       }
     });
-    const data = await response.json();
 
+    if (response.status == 401) {
+      return NextResponse.json({message: "user is not admin"}, {status: 401});
+    }
+    
+    const data = await response.json();
     if (data == false) {
-      return NextResponse.json({message: "user is not admin"}, {status: 400});
+      return NextResponse.json({message: "user is not admin"}, {status: 401});
     }
     
     return NextResponse.json({message: "user is admin"}, {status: 200});
