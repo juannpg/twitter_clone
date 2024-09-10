@@ -17,7 +17,7 @@ public class AdminController : ControllerBase
     _context = context;
   }
 
-  public class deleteDto {
+  public class DeleteDto {
     public required string Id { get; set; }
   }
 
@@ -76,7 +76,7 @@ public class AdminController : ControllerBase
   }
 
   [HttpDelete("deleteUser")]
-  public async Task<ActionResult<User>> DeleteUser([FromBody] deleteDto deleteDto)
+  public async Task<ActionResult<User>> DeleteUser([FromBody] DeleteDto deleteDto)
   {
     var idNumber = int.Parse(deleteDto.Id);
 
@@ -132,7 +132,7 @@ public class AdminController : ControllerBase
   }
 
   [HttpDelete("deleteTweet")]
-  public async Task<ActionResult<Tweet>> DeleteTweet([FromBody] deleteDto deleteDto)
+  public async Task<ActionResult<Tweet>> DeleteTweet([FromBody] DeleteDto deleteDto)
   {
     var idNumber = int.Parse(deleteDto.Id);
 
@@ -197,7 +197,7 @@ public class AdminController : ControllerBase
   }
 
   [HttpDelete("deleteReply")]
-  public async Task<ActionResult<Reply>> DeleteReply([FromBody] deleteDto deleteDto)
+  public async Task<ActionResult<Reply>> DeleteReply([FromBody] DeleteDto deleteDto)
   {
     var idNumber = int.Parse(deleteDto.Id);
 
