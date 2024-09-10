@@ -30,7 +30,7 @@ app.UseWhen(context =>
 );
 
 app.UseWhen(context =>
-  context.Request.Path.Value!.Contains("/admin"),
+  context.Request.Path.Value!.Contains("/Admin"),
   appBuilder =>
   {
     appBuilder.UseVerifyToken();

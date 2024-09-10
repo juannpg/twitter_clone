@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
     const seeRepliesId = request.nextUrl.searchParams.get('id');
 
     const IP = process.env.NEXT_PUBLIC_SERVER_IP;
-    const response = await fetch(`http://${IP}:4000/api/replies/getReplies?id=${seeRepliesId}`, { cache: 'no-store' } );
+    const response = await fetch(`http://${IP}:4000/api/Replies/getReplies?id=${seeRepliesId}`, { cache: 'no-store' } );
     const data = await response.json();
     const replies = data.replies;
     

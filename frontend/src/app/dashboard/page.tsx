@@ -22,7 +22,7 @@ export default function DashboardPage() {
       <UsernameComp />
       <AdminPageBtnComp />
       <LogoutBtnComp />
-      <WriteComp endpoint="tweets/createTweet" action="create_tweet" title="Create a tweet"/>
+      <WriteComp endpoint="Tweets/createTweet" action="create_tweet" title="Create a tweet"/>
       <Suspense fallback={<TweetFeedSkeleton />}>
         <TweetsFeedSec />
       </Suspense>
