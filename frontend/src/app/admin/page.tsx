@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function AdminPage() {
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<any>();
 
   
   async function checkAdmin() {
@@ -59,7 +59,7 @@ export default function AdminPage() {
                 onClick={getUsers}
                 >Get Users
               </button>
-              <div>
+              <div className="bg-slate-400 rounded-lg p-2 mt-2 w-[490px] h-96 overflow-y-scroll overflow-x-hidden">
                 <pre>{JSON.stringify(users, null, 2)}</pre>
               </div>
             </div>
