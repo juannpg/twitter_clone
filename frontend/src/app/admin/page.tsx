@@ -106,7 +106,7 @@ export default function AdminPage() {
                 type="text"
               ></input>
               <button
-                className='text-xl text-text mb-1 border rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='text-xl text-text mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => deleteX({endpoint: "deleteUser", id: userId})}
               >Delete User</button>
             </div>
@@ -119,7 +119,7 @@ export default function AdminPage() {
                 type="text"
               ></input>
               <button
-                className='text-xl text-text mb-1 border rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='text-xl text-text mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => deleteX({endpoint: "deleteTweet", id: tweetId})}
               >Delete Tweet</button>
             </div>
@@ -132,25 +132,25 @@ export default function AdminPage() {
                 type="text"
               ></input>
               <button
-                className='text-xl text-text mb-1 border rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='text-xl text-text mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => deleteX({endpoint: "deleteReply", id: replyId})}
               >Delete Reply</button>
             </div>
           </div>
           <div>
-            <div className="flex flex-wrap w-full">
+            <div className="flex flex-wrap w-full gap-1">
               <button
-                className='flex-1 border rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
+                className='flex-1 border-none rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
                 onClick={() => getX({endpoint: "getUsers"})}
                 >Get Users
               </button>
               <button
-                className='flex-1 border rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
+                className='flex-1 border-none rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
                 onClick={() => getX({endpoint: "getTweets"})}
                 >Get Tweets
               </button>
               <button
-                className='flex-1 border rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
+                className='flex-1 border-none rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
                 onClick={() => getX({endpoint: "getReplies"})}
                 >Get Replies
               </button>
