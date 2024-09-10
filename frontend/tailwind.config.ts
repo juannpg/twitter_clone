@@ -18,6 +18,7 @@ const config: Config = {
         "primary": "#14213d",
         "secondary": "#7a3833",
         "background": "#000000",
+        "background-darker": "#8d7d62",
         "text": "#e5e5e5"
       }
     },

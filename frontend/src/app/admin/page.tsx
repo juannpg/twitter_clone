@@ -1,15 +1,19 @@
 "use client";
 
+import './scrollbar.css';
+
 import { useEffect, useState } from "react";
 
 export default function AdminPage() {
   const [isAdmin, setIsAdmin] = useState(false);
-
   const [text, setText] = useState<any>();
   const [userId, setUserId] = useState("");
   const [tweetId, setTweetId] = useState("");
   const [replyId, setReplyId] = useState("");
-  
+
+  // transition made with chatgpt
+  const [fade, setFade] = useState(false);
+
   async function checkAdmin() {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const token = localStorage.getItem('token');
@@ -46,7 +50,13 @@ export default function AdminPage() {
       },
     })
     const data = await response.json();
-    setText(data);
+    
+    // transition made with chatgpt
+    setFade(true); // Trigger fade-out
+    setTimeout(() => {
+      setText(data);
+      setFade(false); // Trigger fade-in
+    }, 300); // Duration of fade-out
   }
 
   async function deleteX({endpoint, id}:{endpoint:string, id:string}) {
@@ -69,7 +79,14 @@ export default function AdminPage() {
     })
     
     const data = await response.json();
-    setText(data);
+
+    // transition made with chatgpt
+    setFade(true); // Trigger fade-out
+    setTimeout(() => {
+      setText(data);
+      setFade(false); // Trigger fade-in
+    }, 300); // Duration of fade-out
+
     setUserId("");
     setTweetId("");
     setReplyId("");
@@ -77,8 +94,8 @@ export default function AdminPage() {
 
   return (
     <>
-      {isAdmin == true ? (
-        <main className='h-screen flex flex-grid items-center justify-center'>
+      {isAdmin ? (
+        <main className='h-screen flex flex-col md:flex-row items-center justify-center'>
           <div>
             <div>
               <input
@@ -89,7 +106,7 @@ export default function AdminPage() {
                 type="text"
               ></input>
               <button
-                className='text-2xl text-text mb-1'
+                className='text-xl text-text mb-1 border rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => deleteX({endpoint: "deleteUser", id: userId})}
               >Delete User</button>
             </div>
@@ -102,7 +119,7 @@ export default function AdminPage() {
                 type="text"
               ></input>
               <button
-                className='text-2xl text-text mb-1'
+                className='text-xl text-text mb-1 border rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => deleteX({endpoint: "deleteTweet", id: tweetId})}
               >Delete Tweet</button>
             </div>
@@ -115,28 +132,34 @@ export default function AdminPage() {
                 type="text"
               ></input>
               <button
-                className='text-2xl text-text mb-1'
+                className='text-xl text-text mb-1 border rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => deleteX({endpoint: "deleteReply", id: replyId})}
               >Delete Reply</button>
             </div>
           </div>
           <div>
-            <div className="flex flex-grid ">
+            <div className="flex flex-wrap w-full">
               <button
+                className='flex-1 border rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
                 onClick={() => getX({endpoint: "getUsers"})}
                 >Get Users
               </button>
               <button
+                className='flex-1 border rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
                 onClick={() => getX({endpoint: "getTweets"})}
                 >Get Tweets
               </button>
               <button
+                className='flex-1 border rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
                 onClick={() => getX({endpoint: "getReplies"})}
                 >Get Replies
               </button>
             </div>
-            <div className="bg-slate-400 rounded-lg p-2 mt-2 w-[490px] h-96 overflow-y-scroll overflow-x-hidden">
-              <pre>{JSON.stringify(text, null, 2)}</pre>
+            <div className="bg-background-darker rounded-lg p-2 mt-2 w-72 md:w-[490px] h-96 overflow-y-scroll overflow-x-scroll hide-scrollbar">
+              {/* transition made with chatgpt */}
+              <pre className={`transition-opacity duration-300 ${fade ? 'opacity-0' : 'opacity-100'}`}>
+                {JSON.stringify(text, null, 2)}
+              </pre>
             </div>
           </div>
         </main>
