@@ -7,12 +7,14 @@ import { useEffect, useState } from "react";
 export default function AdminPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [text, setText] = useState<any>();
+  const [response, setResponse] = useState<any>();
   const [userId, setUserId] = useState("");
   const [tweetId, setTweetId] = useState("");
   const [replyId, setReplyId] = useState("");
 
   // transition made with chatgpt
   const [fade, setFade] = useState(false);
+  const [fade2, setFade2] = useState(false);
 
   async function checkAdmin() {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -79,12 +81,13 @@ export default function AdminPage() {
     })
     
     const data = await response.json();
+    const message = data.data;
 
     // transition made with chatgpt
-    setFade(true); // Trigger fade-out
+    setFade2(true); // Trigger fade-out
     setTimeout(() => {
-      setText(data);
-      setFade(false); // Trigger fade-in
+      setResponse(message);
+      setFade2(false); // Trigger fade-in
     }, 300); // Duration of fade-out
 
     setUserId("");
@@ -96,61 +99,67 @@ export default function AdminPage() {
     <>
       {isAdmin ? (
         <main className='h-screen flex flex-col md:flex-row items-center justify-center'>
-          <div>
+          <div className="mr-2">
             <div>
               <input
-                className="w-10 h-10"
+                className="w-9 h-9 m-1"
                 placeholder="id"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
                 type="text"
               ></input>
               <button
-                className='text-xl text-black mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
                 onClick={() => deleteX({endpoint: "deleteUser", id: userId})}
               >Delete User</button>
             </div>
             <div>
               <input
-                className="w-10 h-10"
+                className="w-9 h-9 m-1"
                 placeholder="id"
                 value={tweetId}
                 onChange={(e) => setTweetId(e.target.value)}
                 type="text"
               ></input>
               <button
-                className='text-xl text-black mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
                 onClick={() => deleteX({endpoint: "deleteTweet", id: tweetId})}
               >Delete Tweet</button>
             </div>
             <div>
               <input
-                className="w-10 h-10"
+                className="w-9 h-9 m-1"
                 placeholder="id"
                 value={replyId}
                 onChange={(e) => setReplyId(e.target.value)}
                 type="text"
               ></input>
               <button
-                className='text-xl text-black mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
                 onClick={() => deleteX({endpoint: "deleteReply", id: replyId})}
               >Delete Reply</button>
+            </div>
+            <div className="w-[332px] h-36 bg-background-darker p-2 mt-2 overflow-y-scroll overflow-x-scroll hide-scrollbar">
+              {/* transition made with chatgpt */}
+              <pre className={`transition-opacity duration-300 ${fade2 ? 'opacity-0' : 'opacity-100'}`}>
+                {JSON.stringify(response, null, 2)}
+              </pre>
             </div>
           </div>
           <div>
             <div className="flex flex-wrap w-full gap-1">
               <button
-                className='flex-1 border-none rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
+                className='flex-1 hover:flex-[2] px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition-all duration-300'
                 onClick={() => getX({endpoint: "getUsers"})}
                 >Get Users
               </button>
               <button
-                className='flex-1 border-none rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
+                className='flex-1 hover:flex-[2] px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition-all duration-300'
                 onClick={() => getX({endpoint: "getTweets"})}
                 >Get Tweets
               </button>
               <button
-                className='flex-1 border-none rounded-md px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition'
+                className='flex-1 hover:flex-[2] px-2 bg-secondary text-text hover:bg-primary hover:text-background-darker transition-all duration-300'
                 onClick={() => getX({endpoint: "getReplies"})}
                 >Get Replies
               </button>
