@@ -106,7 +106,7 @@ export default function AdminPage() {
                 type="text"
               ></input>
               <button
-                className='text-xl text-text mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='text-xl text-black mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => deleteX({endpoint: "deleteUser", id: userId})}
               >Delete User</button>
             </div>
@@ -119,7 +119,7 @@ export default function AdminPage() {
                 type="text"
               ></input>
               <button
-                className='text-xl text-text mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='text-xl text-black mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => deleteX({endpoint: "deleteTweet", id: tweetId})}
               >Delete Tweet</button>
             </div>
@@ -132,7 +132,7 @@ export default function AdminPage() {
                 type="text"
               ></input>
               <button
-                className='text-xl text-text mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='text-xl text-black mb-1 border-none rounded-md px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => deleteX({endpoint: "deleteReply", id: replyId})}
               >Delete Reply</button>
             </div>
@@ -155,7 +155,7 @@ export default function AdminPage() {
                 >Get Replies
               </button>
             </div>
-            <div className="bg-background-darker rounded-lg p-2 mt-2 w-72 md:w-[490px] h-96 overflow-y-scroll overflow-x-scroll hide-scrollbar">
+            <div className="bg-background-darker p-2 mt-2 w-72 md:w-[490px] h-96 overflow-y-scroll overflow-x-scroll hide-scrollbar">
               {/* transition made with chatgpt */}
               <pre className={`transition-opacity duration-300 ${fade ? 'opacity-0' : 'opacity-100'}`}>
                 {JSON.stringify(text, null, 2)}

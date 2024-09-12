@@ -58,18 +58,18 @@ export default function LoginComp() {
           placeholder="Username"
           autoComplete="on"
           onChange={(e) => setUsername(e.target.value)}
-          className="border-2 border-primary rounded-md p-2 text-primary w-96 mb-2"
+          className="border-2 border-primary rounded-md p-2 text-black w-96 mb-2"
         />
         <input
           type="password"
           placeholder="Password"
           autoComplete="on"
           onChange={(e) => setPassword(e.target.value)}
-          className="border-2 border-primary rounded-md p-2 text-primary w-96 mb-2"
+          className="border-2 border-primary rounded-md p-2 text-black w-96 mb-2"
         />
         <button
           type="submit"
-          className="bg-primary text-text rounded-md p-2 hover:text-primary hover:bg-secondary hover:scale-105 transition w-96">
+          className="bg-primary text-black rounded-md p-2 hover:text-primary hover:bg-secondary hover:scale-105 transition w-96">
           Login
         </button>
       </form>

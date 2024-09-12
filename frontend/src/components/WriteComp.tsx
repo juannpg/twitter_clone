@@ -70,12 +70,12 @@ export default function WriteComp({ endpoint, action, title }:{ endpoint:string,
         <textarea
           placeholder="Content"
           onChange={(e) => setContent(e.target.value)}
-          className="border-2 border-primary rounded-md p-2 text-primary w-full h-28 mb-2"
+          className="border-2 border-primary rounded-md p-2 text-black w-full h-28 mb-2"
         />
         <button
           onClick={() => write({ endpoint, action, content })}
-          className="bg-primary text-text rounded-md p-2 hover:bg-secondary hover:text-primary hover:scale-105 transition w-28 absolute right-2 bottom-5">
-          Create
+          className="bg-primary text-black rounded-md p-2 hover:bg-secondary hover:text-primary hover:scale-105 transition w-28 absolute right-2 bottom-5">
+          Write
         </button>
       </div>
     </main>
