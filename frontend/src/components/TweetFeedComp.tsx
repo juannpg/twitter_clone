@@ -40,7 +40,7 @@ export default function TweetFeedComp({id ,content, username,  isReplying}:{id:n
           <div className='flex items-center h-11'>
             <button 
               onClick={() => reply({ id, content, username })}
-              className="bg-primary text-text rounded-md p-2 hover:bg-secondary hover:text-primary hover:scale-105 transition w-14 h-9 absolute right-0 bottom-2"
+              className="bg-primary text-black rounded-md p-2 hover:bg-secondary hover:text-primary hover:scale-105 transition w-14 h-9 absolute right-0 bottom-2"
             >Reply</button>
             <a
               className='absolute right-16 underline' 

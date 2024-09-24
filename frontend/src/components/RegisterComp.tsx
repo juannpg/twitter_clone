@@ -56,25 +56,25 @@ export default function RegisterComp() {
           placeholder="Email"
           autoComplete="on"
           onChange={(e) => setEmail(e.target.value)}
-          className="border-2 border-primary rounded-md p-2 text-primary w-96 mb-2"
+          className="border-2 border-primary rounded-md p-2 text-black w-96 mb-2"
         />
         <input
           type="text"
           placeholder="Username"
           autoComplete="off"
           onChange={(e) => setUsername(e.target.value)}
-          className="border-2 border-primary rounded-md p-2 text-primary w-96 mb-2"
+          className="border-2 border-primary rounded-md p-2 text-black w-96 mb-2"
         />
         <input
           type="password"
           placeholder="Password"
           autoComplete="off"
           onChange={(e) => setPassword(e.target.value)}
-          className="border-2 border-primary rounded-md p-2 text-primary w-96 mb-2"
+          className="border-2 border-primary rounded-md p-2 text-black w-96 mb-2"
         />
         <button
           type="submit"
-          className="bg-primary text-text rounded-md p-2 hover:bg-secondary hover:text-primary hover:scale-105 transition w-96">
+          className="bg-primary text-black rounded-md p-2 hover:bg-secondary hover:text-primary hover:scale-105 transition w-96">
           Register
         </button>
       </form>

@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace csharp_backend.Middlewares;
 
-public class VerifyTokenMiddleware
+public class VerifyAdminMiddleware
 {
   private readonly RequestDelegate _next;
   private readonly IServiceScopeFactory _scopeFactory;
 
-  public VerifyTokenMiddleware(RequestDelegate next, IServiceScopeFactory scopeFactory)
+  public VerifyAdminMiddleware(RequestDelegate next, IServiceScopeFactory scopeFactory)
   {
     _next = next;
     _scopeFactory = scopeFactory;
@@ -28,20 +28,25 @@ public class VerifyTokenMiddleware
         .Where(u => u.Token == token)
         .Select(u => new
         {
-          Username = u.Username,
-          Token = u.Token
+          Role = u.Role,
         })
         .FirstOrDefaultAsync();
 
       if (user == null)
       {
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-        await context.Response.WriteAsync("Invalid token");
+        await context.Response.WriteAsync("Unauthorized");
         return;
       }
 
-      context.Items["username"] = user.Username;
-      context.Items["token"] = user.Token;
+      var role = user.Role.ToString();
+      if (role != "Admin")
+      {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        await context.Response.WriteAsync("Unauthorized");
+        return;
+      }
+
     }
 
     await _next(context);
