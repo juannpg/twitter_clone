@@ -101,6 +101,12 @@ export default function AdminPage() {
         <main className='h-screen flex flex-col md:flex-row items-center justify-center'>
           <div className="mr-2">
             <div>
+              <button
+                className='w-full h-9 text-xl text-black px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                onClick={() => window.location.href = "/dashboard"}
+              >Home</button>
+            </div>
+            <div>
               <input
                 className="w-9 h-9 m-1"
                 placeholder="id"
