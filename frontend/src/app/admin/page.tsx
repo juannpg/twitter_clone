@@ -98,7 +98,7 @@ export default function AdminPage() {
   return (
     <>
       {isAdmin ? (
-        <main className='h-screen flex flex-col md:flex-row items-center justify-center'>
+        <main className='py-10 flex flex-col md:flex-row items-center justify-center'>
           <div className="mr-2">
             <div>
               <button
