@@ -104,7 +104,7 @@ export default function AdminPage() {
               <button
                 className='w-full h-9 text-xl text-black px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => window.location.href = "/dashboard"}
-              >Home</button>
+              >Go Home</button>
             </div>
             <div>
               <input
