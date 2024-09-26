@@ -240,6 +240,14 @@ public class AdminController : ControllerBase
       });
     }
 
+    if (userToMakeAdmin.Role == (backend.Models.User.ERole)1)
+    {
+      return StatusCode(400, new
+      {
+        Message = "User already admin"
+      });
+    }
+
     userToMakeAdmin.Role = (backend.Models.User.ERole)1;
     await _context.SaveChangesAsync();
 
