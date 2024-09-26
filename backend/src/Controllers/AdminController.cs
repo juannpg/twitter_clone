@@ -240,7 +240,7 @@ public class AdminController : ControllerBase
       });
     }
 
-    userToMakeAdmin.Role = UserRole.Admin;
+    userToMakeAdmin.Role = (backend.Models.User.ERole)1;
     await _context.SaveChangesAsync();
 
     return StatusCode(200, new
