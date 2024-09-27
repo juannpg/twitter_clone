@@ -21,6 +21,11 @@ public class AdminController : ControllerBase
     public required string Id { get; set; }
   }
 
+  public class AdminDto {
+    public required string Id { get; set; }
+    public required string Role { get; set; }
+  }
+
   [HttpGet("verifyAdmin")]
   public async Task<ActionResult<bool>> VerifyAdmin()
   {
@@ -224,16 +229,17 @@ public class AdminController : ControllerBase
 
   }
 
-  [HttpPut("makeAdmin")]
-  public async Task<ActionResult<User>> MakeAdmin([FromBody] IdDto idDto)
+  [HttpPut("changeRole")]
+  public async Task<ActionResult<User>> changeRole([FromBody] AdminDto adminDto)
   {
-    var idNumber = int.Parse(idDto.Id);
+    var idNumber = int.Parse(adminDto.Id);
+    var role = int.Parse(adminDto.Role);
 
-    var userToMakeAdmin = await _context.Users
+    var userToChangeRole = await _context.Users
       .Where(u => u.Id == idNumber)
       .FirstOrDefaultAsync();
 
-    if (userToMakeAdmin == null)
+    if (userToChangeRole == null)
     {
       return StatusCode(400, new
       {
@@ -241,20 +247,40 @@ public class AdminController : ControllerBase
       });
     }
 
-    if (userToMakeAdmin.Role == (backend.Models.User.ERole)1)
+    if (userToChangeRole.Role == (backend.Models.User.ERole)1 && role == 1)
     {
       return StatusCode(400, new
       {
         Message = "User already admin"
       });
+    } else if (userToChangeRole.Role == (backend.Models.User.ERole)0 && role == 0)
+    {
+      return StatusCode(400, new
+      {
+        Message = "User already not admin"
+      });
     }
 
-    userToMakeAdmin.Role = (backend.Models.User.ERole)1;
+    userToChangeRole.Role = (backend.Models.User.ERole)role;
     await _context.SaveChangesAsync();
 
-    return StatusCode(200, new
+    if (role == 1)
     {
-      Message = "User made admin successfully"
+      return StatusCode(200, new
+      {
+        Message = "User made admin successfully"
+      });
+    } else if (role == 0)
+    {
+      return StatusCode(200, new
+      {
+        Message = "User made not admin successfully"
+      });
+    }
+
+    return StatusCode(400, new
+    {
+      Message = "Unexpected error"
     });
   }
 }
