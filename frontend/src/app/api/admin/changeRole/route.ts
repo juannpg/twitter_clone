@@ -3,14 +3,14 @@ import { NextResponse } from 'next/server';
 export async function PUT(request: Request) {
   try {
     const authorization = request.headers.get('authorization');
-    const { id } = await request.json();
+    const { id, role } = await request.json();
 
     if (!authorization) {
       return NextResponse.json({message: "user is not admin"}, {status: 401});
     }
     const token = authorization.split(' ')[1];
 
-    const response = await fetch(`http://${process.env.NEXT_PUBLIC_SERVER_IP}:4000/api/Admin/makeAdmin`, {
+    const response = await fetch(`http://${process.env.NEXT_PUBLIC_SERVER_IP}:4000/api/Admin/changeRole`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json',
@@ -18,6 +18,7 @@ export async function PUT(request: Request) {
       },
       body: JSON.stringify({
         id: id as string,
+        role: role as string,
       })
     });
 

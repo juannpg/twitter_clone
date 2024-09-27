@@ -9,6 +9,7 @@ export default function AdminPage() {
   const [text, setText] = useState<any>();
   const [response, setResponse] = useState<any>();
   const [adminId, setAdminId] = useState("");
+  const [role, setRole] = useState("");
   const [userId, setUserId] = useState("");
   const [tweetId, setTweetId] = useState("");
   const [replyId, setReplyId] = useState("");
@@ -96,15 +97,15 @@ export default function AdminPage() {
     setReplyId("");
   }
 
-  async function makeAdmin({id}:{id:string}) {
+  async function changeRole({id, role}:{id:string, role:string}) {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const token = localStorage.getItem('token');
 
-    if (!id) {
-      alert("id required")
+    if (!id || !role) {
+      alert("id and role required")
     }
 
-    const response = await fetch(`${apiBaseUrl}/api/admin/makeAdmin`, {
+    const response = await fetch(`${apiBaseUrl}/api/admin/changeRole`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json',
@@ -112,6 +113,7 @@ export default function AdminPage() {
       },
       body: JSON.stringify({
         id: id as string,
+        role: role as string,
       })
     });
     const data = await response.json();
@@ -125,6 +127,7 @@ export default function AdminPage() {
     }, 300); // Duration of fade-out
 
     setAdminId("");
+    setRole("");
   }
 
   return (
@@ -146,10 +149,17 @@ export default function AdminPage() {
                 onChange={(e) => setAdminId(e.target.value)}
                 type="text"
               ></input>
+              <input
+                className="w-9 h-9 m-1"
+                placeholder="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                type="text"
+              ></input>
               <button
-                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
-                onClick={() => makeAdmin({id: adminId})}
-              >Make Admin</button>
+                className='w-[252px] h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
+                onClick={() => changeRole({id: adminId, role: role})}
+              >Change Role</button>
             </div>
             <div>
               <input
