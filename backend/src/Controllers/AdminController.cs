@@ -17,7 +17,7 @@ public class AdminController : ControllerBase
     _context = context;
   }
 
-  public class DeleteDto {
+  public class IdDto {
     public required string Id { get; set; }
   }
 
@@ -76,9 +76,9 @@ public class AdminController : ControllerBase
   }
 
   [HttpDelete("deleteUser")]
-  public async Task<ActionResult<User>> DeleteUser([FromBody] DeleteDto deleteDto)
+  public async Task<ActionResult<User>> DeleteUser([FromBody] IdDto idDto)
   {
-    var idNumber = int.Parse(deleteDto.Id);
+    var idNumber = int.Parse(idDto.Id);
 
     var userToDelete = await _context.Users
       .Where(u => u.Id == idNumber)
@@ -132,9 +132,9 @@ public class AdminController : ControllerBase
   }
 
   [HttpDelete("deleteTweet")]
-  public async Task<ActionResult<Tweet>> DeleteTweet([FromBody] DeleteDto deleteDto)
+  public async Task<ActionResult<Tweet>> DeleteTweet([FromBody] IdDto idDto)
   {
-    var idNumber = int.Parse(deleteDto.Id);
+    var idNumber = int.Parse(idDto.Id);
 
     var tweetToDelete = await _context.Tweets
       .Where(t => t.Id == idNumber)
@@ -197,9 +197,9 @@ public class AdminController : ControllerBase
   }
 
   [HttpDelete("deleteReply")]
-  public async Task<ActionResult<Reply>> DeleteReply([FromBody] DeleteDto deleteDto)
+  public async Task<ActionResult<Reply>> DeleteReply([FromBody] IdDto idDto)
   {
-    var idNumber = int.Parse(deleteDto.Id);
+    var idNumber = int.Parse(idDto.Id);
 
     var replyToDelete = await _context.Replies
       .Where(r => r.Id == idNumber)
@@ -219,6 +219,41 @@ public class AdminController : ControllerBase
     return StatusCode(200, new
     {
       Message = "Reply deleted successfully"
+    });
+
+  }
+
+  [HttpPut("makeAdmin")]
+  public async Task<ActionResult<User>> MakeAdmin([FromBody] IdDto idDto)
+  {
+    var idNumber = int.Parse(idDto.Id);
+
+    var userToMakeAdmin = await _context.Users
+      .Where(u => u.Id == idNumber)
+      .FirstOrDefaultAsync();
+
+    if (userToMakeAdmin == null)
+    {
+      return StatusCode(400, new
+      {
+        Message = "User not found"
+      });
+    }
+
+    if (userToMakeAdmin.Role == (backend.Models.User.ERole)1)
+    {
+      return StatusCode(400, new
+      {
+        Message = "User already admin"
+      });
+    }
+
+    userToMakeAdmin.Role = (backend.Models.User.ERole)1;
+    await _context.SaveChangesAsync();
+
+    return StatusCode(200, new
+    {
+      Message = "User made admin successfully"
     });
   }
 }
