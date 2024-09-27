@@ -55,7 +55,8 @@ public class AdminController : ControllerBase
         Id = u.Id,
         Email = u.Email,
         Username = u.Username,
-        CreatedAt = u.CreatedAt
+        CreatedAt = u.CreatedAt,
+        Role = u.Role
       })
       .OrderByDescending(u => u.CreatedAt)
       .ToListAsync();
