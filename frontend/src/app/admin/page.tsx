@@ -8,6 +8,7 @@ export default function AdminPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [text, setText] = useState<any>();
   const [response, setResponse] = useState<any>();
+  const [adminId, setAdminId] = useState("");
   const [userId, setUserId] = useState("");
   const [tweetId, setTweetId] = useState("");
   const [replyId, setReplyId] = useState("");
@@ -95,6 +96,37 @@ export default function AdminPage() {
     setReplyId("");
   }
 
+  async function makeAdmin({id}:{id:string}) {
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const token = localStorage.getItem('token');
+
+    if (!id) {
+      alert("id required")
+    }
+
+    const response = await fetch(`${apiBaseUrl}/api/admin/makeAdmin`, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        id: id as string,
+      })
+    });
+    const data = await response.json();
+    const message = data.data;
+
+    // transition made with chatgpt
+    setFade2(true); // Trigger fade-out
+    setTimeout(() => {
+      setResponse(message);
+      setFade2(false); // Trigger fade-in
+    }, 300); // Duration of fade-out
+
+    setAdminId("");
+  }
+
   return (
     <>
       {isAdmin ? (
@@ -105,6 +137,19 @@ export default function AdminPage() {
                 className='w-full h-9 text-xl text-black px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => window.location.href = "/dashboard"}
               >Go Home</button>
+            </div>
+            <div>
+              <input
+                className="w-9 h-9 m-1"
+                placeholder="id"
+                value={adminId}
+                onChange={(e) => setAdminId(e.target.value)}
+                type="text"
+              ></input>
+              <button
+                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
+                onClick={() => makeAdmin({id: adminId})}
+              >Make Admin</button>
             </div>
             <div>
               <input
