@@ -9,6 +9,7 @@ export default function AdminPage() {
   const [text, setText] = useState<any>();
   const [response, setResponse] = useState<any>();
   const [adminId, setAdminId] = useState("");
+  const [role, setRole] = useState("");
   const [userId, setUserId] = useState("");
   const [tweetId, setTweetId] = useState("");
   const [replyId, setReplyId] = useState("");
@@ -96,15 +97,15 @@ export default function AdminPage() {
     setReplyId("");
   }
 
-  async function makeAdmin({id}:{id:string}) {
+  async function changeRole({id, role}:{id:string, role:string}) {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
     const token = localStorage.getItem('token');
 
-    if (!id) {
-      alert("id required")
+    if (!id || !role) {
+      alert("id and role required")
     }
 
-    const response = await fetch(`${apiBaseUrl}/api/admin/makeAdmin`, {
+    const response = await fetch(`${apiBaseUrl}/api/admin/changeRole`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json',
@@ -112,6 +113,7 @@ export default function AdminPage() {
       },
       body: JSON.stringify({
         id: id as string,
+        role: role as string,
       })
     });
     const data = await response.json();
@@ -125,6 +127,7 @@ export default function AdminPage() {
     }, 300); // Duration of fade-out
 
     setAdminId("");
+    setRole("");
   }
 
   return (
@@ -134,63 +137,70 @@ export default function AdminPage() {
           <div className="mr-2">
             <div>
               <button
-                className='w-full h-9 text-xl text-black px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='w-full mb-1 h-9 text-xl text-black px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => window.location.href = "/dashboard"}
               >Go Home</button>
             </div>
-            <div>
+            <div className='flex align-middle py-1'>
               <input
-                className="w-9 h-9 m-1"
+                className="w-9 h-9 mr-1 text-center"
                 placeholder="id"
                 value={adminId}
                 onChange={(e) => setAdminId(e.target.value)}
                 type="text"
               ></input>
-              <button
-                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
-                onClick={() => makeAdmin({id: adminId})}
-              >Make Admin</button>
-            </div>
-            <div>
               <input
-                className="w-9 h-9 m-1"
+                className="w-9 h-9 mr-1 text-center"
+                placeholder="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                type="text"
+              ></input>
+              <button
+                className='w-[280px] h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
+                onClick={() => changeRole({id: adminId, role: role})}
+              >Change Role</button>
+            </div>
+            <div className='flex align-middle py-1'>
+              <input
+                className="w-9 h-9 mr-1 text-center"
                 placeholder="id"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
                 type="text"
               ></input>
               <button
-                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
+                className='w-80 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
                 onClick={() => deleteX({endpoint: "deleteUser", id: userId})}
               >Delete User</button>
             </div>
-            <div>
+            <div className='flex align-middle py-1'>
               <input
-                className="w-9 h-9 m-1"
+                className="w-9 h-9 mr-1 text-center"
                 placeholder="id"
                 value={tweetId}
                 onChange={(e) => setTweetId(e.target.value)}
                 type="text"
               ></input>
               <button
-                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
+                className='w-80 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
                 onClick={() => deleteX({endpoint: "deleteTweet", id: tweetId})}
               >Delete Tweet</button>
             </div>
-            <div>
+            <div className='flex align-middle py-1'>
               <input
-                className="w-9 h-9 m-1"
+                className="w-9 h-9 mr-1 text-center"
                 placeholder="id"
                 value={replyId}
                 onChange={(e) => setReplyId(e.target.value)}
                 type="text"
               ></input>
               <button
-                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
+                className='w-80 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
                 onClick={() => deleteX({endpoint: "deleteReply", id: replyId})}
               >Delete Reply</button>
             </div>
-            <div className="w-[332px] h-36 text-white bg-background-darker p-2 mt-2 overflow-y-scroll overflow-x-scroll hide-scrollbar">
+            <div className="w-full h-48 text-white bg-background-darker p-2 mt-2 overflow-y-scroll overflow-x-scroll hide-scrollbar">
               {/* transition made with chatgpt */}
               <pre className={`transition-opacity duration-300 ${fade2 ? 'opacity-0' : 'opacity-100'}`}>
                 {JSON.stringify(response, null, 2)}

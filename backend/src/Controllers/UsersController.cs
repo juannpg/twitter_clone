@@ -33,11 +33,26 @@ public class UsersController : ControllerBase // es necesario que nuestra clase 
   [HttpPost("register")]
   public async Task<ActionResult<User>> Register([FromBody] RegisterDto registerDto)
   {
+    var user1 = await _context.Users
+      .Where(u => u.Id == 1)
+      .FirstOrDefaultAsync();
+
+    var admins = await _context.Users
+      .Where(u => u.Role == backend.Models.User.ERole.Admin)
+      .ToListAsync();
+
+    int role = 0;
+    if (user1 == null && admins.Count == 0)
+    {
+      role = 1;
+    }
+
     var user = new User
     {
       Email = registerDto.Email,
       Username = registerDto.Username,
-      Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
+      Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
+      Role = (backend.Models.User.ERole)role
     };
 
     _context.Users.Add(user);
