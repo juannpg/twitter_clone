@@ -66,14 +66,6 @@ public class AdminController : ControllerBase
       .OrderByDescending(u => u.CreatedAt)
       .ToListAsync();
 
-    if (users == null)
-    {
-      return StatusCode(400, new
-      {
-        Message = "No users found"
-      });
-    }
-
     return StatusCode(200, new
     {
       Message = "Users retrieved successfully",
@@ -122,7 +114,7 @@ public class AdminController : ControllerBase
       .OrderByDescending(t => t.CreatedAt)
       .ToListAsync();
 
-    if (tweets == null)
+    if (tweets.Count == 0)
     {
       return StatusCode(400, new
       {
@@ -187,7 +179,7 @@ public class AdminController : ControllerBase
       .OrderByDescending(r => r.CreatedAt)
       .ToListAsync();
 
-    if (replies == null)
+    if (replies.Count == 0)
     {
       return StatusCode(400, new
       {

@@ -200,10 +200,10 @@ export default function AdminPage() {
                 onClick={() => deleteX({endpoint: "deleteReply", id: replyId})}
               >Delete Reply</button>
             </div>
-            <div className="w-full h-48 text-white bg-background-darker p-2 mt-2 overflow-y-scroll overflow-x-scroll hide-scrollbar">
+            <div className="w-[360px] h-48 text-white bg-background-darker p-2 mt-2 overflow-y-scroll overflow-x-scroll hide-scrollbar">
               {/* transition made with chatgpt */}
               <pre className={`transition-opacity duration-300 ${fade2 ? 'opacity-0' : 'opacity-100'}`}>
-                {JSON.stringify(response, null, 2)}
+                {JSON.stringify(response, null, 1)}
               </pre>
             </div>
           </div>
