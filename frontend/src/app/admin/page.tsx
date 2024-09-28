@@ -137,70 +137,70 @@ export default function AdminPage() {
           <div className="mr-2">
             <div>
               <button
-                className='w-full h-9 text-xl text-black px-2 bg-primary hover:bg-secondary hover:text-primary transition'
+                className='w-full mb-1 h-9 text-xl text-black px-2 bg-primary hover:bg-secondary hover:text-primary transition'
                 onClick={() => window.location.href = "/dashboard"}
               >Go Home</button>
             </div>
-            <div>
+            <div className='flex align-middle py-1'>
               <input
-                className="w-9 h-9 m-1"
+                className="w-9 h-9 mr-1 text-center"
                 placeholder="id"
                 value={adminId}
                 onChange={(e) => setAdminId(e.target.value)}
                 type="text"
               ></input>
               <input
-                className="w-9 h-9 m-1"
+                className="w-9 h-9 mr-1 text-center"
                 placeholder="role"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 type="text"
               ></input>
               <button
-                className='w-[252px] h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
+                className='w-[280px] h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
                 onClick={() => changeRole({id: adminId, role: role})}
               >Change Role</button>
             </div>
-            <div>
+            <div className='flex align-middle py-1'>
               <input
-                className="w-9 h-9 m-1"
+                className="w-9 h-9 mr-1 text-center"
                 placeholder="id"
                 value={userId}
                 onChange={(e) => setUserId(e.target.value)}
                 type="text"
               ></input>
               <button
-                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
+                className='w-80 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
                 onClick={() => deleteX({endpoint: "deleteUser", id: userId})}
               >Delete User</button>
             </div>
-            <div>
+            <div className='flex align-middle py-1'>
               <input
-                className="w-9 h-9 m-1"
+                className="w-9 h-9 mr-1 text-center"
                 placeholder="id"
                 value={tweetId}
                 onChange={(e) => setTweetId(e.target.value)}
                 type="text"
               ></input>
               <button
-                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
+                className='w-80 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
                 onClick={() => deleteX({endpoint: "deleteTweet", id: tweetId})}
               >Delete Tweet</button>
             </div>
-            <div>
+            <div className='flex align-middle py-1'>
               <input
-                className="w-9 h-9 m-1"
+                className="w-9 h-9 mr-1 text-center"
                 placeholder="id"
                 value={replyId}
                 onChange={(e) => setReplyId(e.target.value)}
                 type="text"
               ></input>
               <button
-                className='w-72 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
+                className='w-80 h-9 text-xl text-black px-2 bg-secondary hover:bg-primary hover:text-secondary transition'
                 onClick={() => deleteX({endpoint: "deleteReply", id: replyId})}
               >Delete Reply</button>
             </div>
-            <div className="w-[332px] h-36 text-white bg-background-darker p-2 mt-2 overflow-y-scroll overflow-x-scroll hide-scrollbar">
+            <div className="w-full h-48 text-white bg-background-darker p-2 mt-2 overflow-y-scroll overflow-x-scroll hide-scrollbar">
               {/* transition made with chatgpt */}
               <pre className={`transition-opacity duration-300 ${fade2 ? 'opacity-0' : 'opacity-100'}`}>
                 {JSON.stringify(response, null, 2)}
