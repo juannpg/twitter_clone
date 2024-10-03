@@ -25,6 +25,7 @@ public class TweetsController : ControllerBase
         Id = t.Id,
         Content = t.Content,
         Username = t.Username,
+        likes = t.Likes,
         CreatedAt = t.CreatedAt
       })
       .OrderByDescending(t => t.CreatedAt)

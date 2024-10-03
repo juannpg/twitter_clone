@@ -35,6 +35,7 @@ export default async function TweetsFeedSec() {
               id={tweet.id}
               content={tweet.content}
               username={tweet.username}
+              likes={tweet.likes.length}
               isReplying={false}
             />
           ))}

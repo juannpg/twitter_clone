@@ -27,4 +27,7 @@ public class Tweet
 
   [Column("replies")]
   public ICollection<Reply>? Replies { get; set; }
+
+  [Column("likes")]
+  public ICollection<Like>? Likes { get; set; }
 }

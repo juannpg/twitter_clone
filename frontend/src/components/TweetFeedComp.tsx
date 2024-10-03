@@ -27,7 +27,7 @@ const seeReplies = ({ id, content, username }:{ id:number ,content:string, usern
   window.location.href = `/replies?${queryString}`;
 }
 
-export default function TweetFeedComp({id ,content, username,  isReplying}:{id:number ,content:string, username:string, isReplying: boolean}) {  
+export default function TweetFeedComp({id ,content, username, likes, isReplying}:{id:number ,content:string, username:string, likes:number, isReplying: boolean}) {  
 
   return(
     <main className='w-full flex flex-col text-left mb-4 relative'>
@@ -38,6 +38,7 @@ export default function TweetFeedComp({id ,content, username,  isReplying}:{id:n
         {/* if the user is already replying or watching replies, then the reply and see replies buttons are hidden */}
         {isReplying == false && (
           <div className='flex items-center h-11'>
+            <p>{likes} likes</p>
             <button 
               onClick={() => reply({ id, content, username })}
               className="bg-primary text-black rounded-md p-2 hover:bg-secondary hover:text-primary hover:scale-105 transition w-14 h-9 absolute right-0 bottom-2"
