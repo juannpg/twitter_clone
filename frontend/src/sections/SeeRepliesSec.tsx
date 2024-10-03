@@ -40,6 +40,7 @@ export default async function SeeRepliesSec({seeRepliesId}:{seeRepliesId:string}
                 id={reply.id}
                 content={reply.content}
                 username={reply.username}
+                likes={0}
                 isReplying={true}
               />
             ))}
