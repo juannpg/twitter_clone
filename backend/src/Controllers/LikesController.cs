@@ -17,14 +17,16 @@ public class LikesController : ControllerBase
   }
 
   public class LikeDto {
-    public required int TweetId { get; set; }
+    public required string TweetId { get; set; }
   }
 
   [HttpPost("likeTweet")]
   public async Task<ActionResult<Like>> CreateLike([FromBody] LikeDto likeDto)
   {
+    var idNumber = int.Parse(likeDto.TweetId);
+
     var tweet = await _context.Tweets
-      .Where(t => t.Id == likeDto.TweetId)
+      .Where(t => t.Id == idNumber)
       .FirstOrDefaultAsync();
 
     if (tweet == null)
@@ -37,7 +39,7 @@ public class LikesController : ControllerBase
 
     var like = new Like
     {
-      TweetId = likeDto.TweetId
+      TweetId = idNumber
     };
 
     _context.Likes.Add(like);
