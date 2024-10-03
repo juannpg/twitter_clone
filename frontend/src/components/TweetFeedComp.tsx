@@ -27,6 +27,35 @@ const seeReplies = ({ id, content, username }:{ id:number ,content:string, usern
   window.location.href = `/replies?${queryString}`;
 }
 
+const likeTweet = async ({ id }:{ id:number }) => {
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    alert("Please login first");
+    window.location.href = "/login";
+    return;
+  }
+
+  const response = await fetch(`/api/like`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ 
+      tweetId: id.toString(),
+      token: token
+    }),
+  });
+
+  if (!response.ok) {
+    alert("Something went wrong");
+    return;
+  }
+
+  window.location.reload(); 
+}
+
 export default function TweetFeedComp({id ,content, username, likes, isReplying}:{id:number ,content:string, username:string, likes:number, isReplying: boolean}) {  
 
   return(
@@ -38,7 +67,9 @@ export default function TweetFeedComp({id ,content, username, likes, isReplying}
         {/* if the user is already replying or watching replies, then the reply and see replies buttons are hidden */}
         {isReplying == false && (
           <div className='flex items-center h-11'>
-            <p>{likes} {likes == 1 ? "like" : "likes"}</p>
+            <a
+              onClick={() => likeTweet({ id })}
+            >{likes} {likes == 1 ? "like" : "likes"}</a>
             <button 
               onClick={() => reply({ id, content, username })}
               className="bg-primary text-black rounded-md p-2 hover:bg-secondary hover:text-primary hover:scale-105 transition w-14 h-9 absolute right-0 bottom-2"
