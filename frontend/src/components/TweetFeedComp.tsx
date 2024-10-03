@@ -38,7 +38,7 @@ export default function TweetFeedComp({id ,content, username, likes, isReplying}
         {/* if the user is already replying or watching replies, then the reply and see replies buttons are hidden */}
         {isReplying == false && (
           <div className='flex items-center h-11'>
-            <p>{likes} likes</p>
+            <p>{likes} {likes == 1 ? "like" : "likes"}</p>
             <button 
               onClick={() => reply({ id, content, username })}
               className="bg-primary text-black rounded-md p-2 hover:bg-secondary hover:text-primary hover:scale-105 transition w-14 h-9 absolute right-0 bottom-2"
