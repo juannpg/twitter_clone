@@ -42,6 +42,7 @@ const likeTweet = async ({ id }:{ id:number }) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+    cache: "no-store", 
     body: JSON.stringify({ 
       tweetId: id.toString(),
       token: token

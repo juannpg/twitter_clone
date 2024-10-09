@@ -11,6 +11,7 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
+      cache: "no-store",
       body: JSON.stringify({
         tweetId: tweetId as string
       })
